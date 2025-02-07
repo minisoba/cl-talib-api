@@ -27,7 +27,7 @@
 (defun %nearest-equal-or-less (series expected pos &optional (precision 5))
   (let ((our (nth pos series))
         (expect (nth pos expected)))
-    (< (- our expect) (expt 10 (1- precision)))))
+    (< (- our expect) (expt 10 (* -1 precision)))))
 
 (defmacro %compare-with-expected-from-csv (fn csv ts &optional additional-params)
   (with-unique-names (params series expected)
@@ -37,7 +37,7 @@
        (dotimes (i (length ,expected))
          (let ((row1 (nth i ,series))
                (row2 (nth i ,expected)))
-           (dotimes (j (length row1))
+           (dotimes (j (length row2))
              (is (%nearest-equal-or-less row1 row2 j))))))))
 
 (def-suite cl-talib-api-test)
@@ -99,9 +99,7 @@
   (let ((ts (make-time-series-2
              (high-prices-of *stock-prices*)
              (low-prices-of  *stock-prices*))))
-    (%compare-with-expected-from-csv
-     'sar "sar.csv" ts
-     '(:acceleration 0.02 :maximum 0.2))))
+    (%compare-with-expected-from-csv 'sar "sar.csv" ts)))
 
 (test sar-ext
   (let ((ts (make-time-series-2
@@ -151,7 +149,7 @@
   (let ((ts (make-time-series-2
              (high-prices-of *stock-prices*)
              (low-prices-of  *stock-prices*))))
-    (%compare-with-expected-from-csv 'aroon-osc "aroon.csv" ts)))
+    (%compare-with-expected-from-csv 'aroon "aroon.csv" ts)))
 
 (test aroon-osc
   (let ((ts (make-time-series-2

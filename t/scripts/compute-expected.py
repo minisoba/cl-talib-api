@@ -1,6 +1,3 @@
-#
-# https://github.com/TA-Lib/ta-lib-python
-
 import talib as ta
 from talib import MA_Type
 import pandas as pd
@@ -9,13 +6,13 @@ import pandas_ta as tap
 pd.options.display.max_rows = 999
 
 data_dir = "~/GitHub/cl-talib-api/t/data/"
-df = pd.read_csv(base_dir + "stock-prices.csv")
+df = pd.read_csv(data_dir + "stock-prices.csv")
 
 # accbands (API is not available in talib, and use pandas_ta)
-tap.accbands(df.high, df.low, df.close, length=10, mamode="sma").dropna().to_csv(data_dir + "accbands.csv", header=False, index=False)
+tap.accbands(df.high, df.low, df.close, length=10, c=4.0, mamode="sma").dropna().to_csv(data_dir + "accbands.csv", header=False, index=False, columns=['ACCBU_10', 'ACCBM_10',  'ACCBL_10'])
 
 # bbands
-pd.DataFrame(ta.BBANDS(df.close, timeperiod=5, nbdevup=2, nbdevdn=2)).transpose().to_csv(data_dir + "bbands.csv", header=False, index=False)
+pd.DataFrame(ta.BBANDS(df.close, timeperiod=5, nbdevup=2, nbdevdn=2)).transpose().dropna().to_csv(data_dir + "bbands.csv", header=False, index=False)
 
 # dema
 ta.DEMA(df.close, timeperiod=10).dropna().to_csv(data_dir + "dema.csv", header=False, index=False)
@@ -92,13 +89,13 @@ ta.CMO(df.close, timeperiod=14).dropna().to_csv(data_dir + "cmo.csv", header=Fal
 ta.DX(df.high, df.low, df.close, timeperiod=14).dropna().to_csv(data_dir + "dx.csv", header=False, index=False)
 
 # macd
-pd.DataFrame(talib.MACD(df.close, fastperiod=12, slowperiod=26, signalperiod=9)).transpose().dropna().to_csv(data_dir + "macd.csv", header=False, index=False)
+pd.DataFrame(ta.MACD(df.close, fastperiod=12, slowperiod=26, signalperiod=9)).transpose().dropna().to_csv(data_dir + "macd.csv", header=False, index=False)
 
 # macd-ext
-pd.DataFrame(talib.MACDEXT(df.close, fastperiod=12, fastmatype=MA_Type.SMA, slowperiod=26, slowmatype=MA_Type.SMA, signalperiod=9, signalmatype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "macd-ext.csv", header=False, index=False)
+pd.DataFrame(ta.MACDEXT(df.close, fastperiod=12, fastmatype=MA_Type.SMA, slowperiod=26, slowmatype=MA_Type.SMA, signalperiod=9, signalmatype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "macd-ext.csv", header=False, index=False)
 
 # macd-fix
-pd.DataFrame(talib.MACDFIX(df.close, signalperiod=9)).transpose().dropna().to_csv(data_dir + "macd-fix.csv", header=False, index=False)
+pd.DataFrame(ta.MACDFIX(df.close, signalperiod=9)).transpose().dropna().to_csv(data_dir + "macd-fix.csv", header=False, index=False)
 
 # mfi
 ta.MFI(df.high, df.low, df.close, df.volume, timeperiod=14).dropna().to_csv(data_dir + "mfi.csv", header=False, index=False)
@@ -137,13 +134,13 @@ ta.ROCR100(df.close, timeperiod=10).dropna().to_csv(data_dir + "rocr100.csv", he
 ta.RSI(df.close, timeperiod=14).dropna().to_csv(data_dir + "rsi.csv", header=False, index=False)
 
 # stoch
-pd.DataFrame(talib.STOCH(df.high, df.low, df.close, fastk_period=5, slowk_period=3, slowk_matype=MA_Type.SMA, slowd_period=3, slowd_matype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "stoch.csv", header=False, index=False)
+pd.DataFrame(ta.STOCH(df.high, df.low, df.close, fastk_period=5, slowk_period=3, slowk_matype=MA_Type.SMA, slowd_period=3, slowd_matype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "stoch.csv", header=False, index=False)
 
 # stochf
-pd.DataFrame(talib.STOCHF(df.high, df.low, df.close, fastk_period=5, fastd_period=3, fastd_matype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "stochf.csv", header=False, index=False)
+pd.DataFrame(ta.STOCHF(df.high, df.low, df.close, fastk_period=5, fastd_period=3, fastd_matype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "stochf.csv", header=False, index=False)
 
 # stochrsi
-pd.DataFrame(talib.STOCHRSI(df.close, timeperiod=14, fastk_period=5, fastd_period=3, fastd_matype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "stoch-rsi.csv", header=False, index=False)
+pd.DataFrame(ta.STOCHRSI(df.close, timeperiod=14, fastk_period=5, fastd_period=3, fastd_matype=MA_Type.SMA)).transpose().dropna().to_csv(data_dir + "stoch-rsi.csv", header=False, index=False)
 
 # trix
 ta.TRIX(df.close, timeperiod=14).dropna().to_csv(data_dir + "trix.csv", header=False, index=False)

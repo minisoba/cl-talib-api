@@ -50,7 +50,7 @@
 (defmethod midprice ((series time-series-2) start-idx end-idx &key (time-period 2))
   (create-ta-series-1 %midprice series start-idx end-idx :in-args `(,time-period)))
 
-(defmethod sar ((series time-series-2) start-idx end-idx &key (acceleration 0.0) (maximum 0.0))
+(defmethod sar ((series time-series-2) start-idx end-idx &key (acceleration 0.02) (maximum 0.2))
   (unless (eq (type-of acceleration) 'double-float)
     (setf acceleration (coerce acceleration 'double-float)))
   (unless (eq (type-of maximum) 'double-float)
@@ -59,8 +59,8 @@
 
 (defmethod sar-ext ((series time-series-2) start-idx end-idx
                     &key (start-value 0.0) (offset-on-reverse 0.0)
-                         (acceleration-init-long 0.0) (acceleration-long 0.0) (acceleration-max-long 0.0)
-                         (acceleration-init-short 0.0) (acceleration-short 0.0) (acceleration-max-short 0.0))
+                         (acceleration-init-long 0.02) (acceleration-long 0.02) (acceleration-max-long 0.2)
+                         (acceleration-init-short 0.02) (acceleration-short 0.02) (acceleration-max-short 0.2))
   (unless (eq (type-of start-value) 'double-float)
     (setf start-value (coerce start-value 'double-float)))
   (unless (eq (type-of offset-on-reverse) 'double-float)
@@ -135,9 +135,9 @@
    %macd series start-idx end-idx :in-args `(,fast-period ,slow-period ,signal-period)))
 
 (defmethod macd-ext ((series time-series-1) start-idx end-idx
-                 &key (fast-period 12) (fast-ma-type :ema)
-                      (slow-period 26) (slow-ma-type :ema)
-                      (signal-period 9) (signal-ma-type :ema))
+                 &key (fast-period 12) (fast-ma-type :sma)
+                      (slow-period 26) (slow-ma-type :sma)
+                      (signal-period 9) (signal-ma-type :sma))
   (create-ta-series-3
    %macd-ext series start-idx end-idx
    :in-args `(,fast-period ,fast-ma-type ,slow-period ,slow-ma-type ,signal-period ,signal-ma-type)))
@@ -183,7 +183,7 @@
 
 (defmethod stoch ((series time-series-3) start-idx end-idx
                    &key (fast-k-period 5)
-                        (slow-k-period 5) (slow-k-ma-type :sma)
+                        (slow-k-period 3) (slow-k-ma-type :sma)
                         (slow-d-period 3) (slow-d-ma-type :sma))
   (create-ta-series-2
    %stoch series start-idx end-idx
@@ -195,7 +195,7 @@
    %stochf series start-idx end-idx :in-args `(,fast-k-period ,fast-d-period ,fast-d-ma-type)))
 
 (defmethod stoch-rsi ((series time-series-1) start-idx end-idx
-                       &key (time-period 14) (fast-k-period 14) (fast-d-period 3) (fast-d-ma-type :sma))
+                       &key (time-period 14) (fast-k-period 5) (fast-d-period 3) (fast-d-ma-type :sma))
   (create-ta-series-2
    %stoch-rsi series start-idx end-idx
    :in-args `(,time-period ,fast-k-period ,fast-d-period ,fast-d-ma-type)))

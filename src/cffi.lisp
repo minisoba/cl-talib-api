@@ -164,8 +164,8 @@
   (opt-in-acceleration-init-short :double)
   (opt-in-acceleration-short      :double)
   (opt-in-acceleration-max-short  :double)
-  (out-beg-idx                    (:pointer :double))
-  (out-nb-element                 (:pointer :double))
+  (out-beg-idx                    (:pointer :int))
+  (out-nb-element                 (:pointer :int))
   (out-real                       (:pointer :double)))
 
 (cffi:defcfun ("TA_SMA" %sma) :ret-code
@@ -411,8 +411,8 @@
   (in-high            (:pointer :double))
   (in-low             (:pointer :double))
   (opt-in-time-period :int)
-  (out-beg-idx        (:pointer :double))
-  (out-nb-element     (:pointer :double))
+  (out-beg-idx        (:pointer :int))
+  (out-nb-element     (:pointer :int))
   (out-real           (:pointer :double)))
 
 (cffi:defcfun ("TA_PPO" %ppo) :ret-code
@@ -612,14 +612,6 @@
   (in-high            (:pointer :double))
   (in-low             (:pointer :double))
   (in-close           (:pointer :double))
-  (out-beg-idx        (:pointer :int))
-  (out-nb-element     (:pointer :int))
-  (out-real           (:pointer :double)))
-
-(cffi:defcfun ("TA_ATAN" %atan) :ret-code
-  (start-idx          :int)
-  (end-idx            :int)
-  (in-real            (:pointer :double))
   (out-beg-idx        (:pointer :int))
   (out-nb-element     (:pointer :int))
   (out-real           (:pointer :double)))
