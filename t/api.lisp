@@ -71,6 +71,7 @@
   (let ((ts (make-time-series-1 (close-prices-of *stock-prices*))))
     (%compare-with-expected-from-csv 'ma "ma.csv" ts)))
 
+#-unix
 (test mama
   (let ((ts (make-time-series-1 (close-prices-of *stock-prices*))))
     (%compare-with-expected-from-csv

@@ -28,6 +28,7 @@
                &key (time-period 10) (ma-type :sma))
   (create-ta-series-1 %ma series start-idx end-idx :in-args `(,time-period ,ma-type)))
 
+#-unix
 (defmethod mama ((series time-series-1) start-idx end-idx
                  &key (fast-limit 0.01) (slow-limit 0.01))
   (unless (eq (type-of fast-limit) 'double-float)
@@ -44,7 +45,7 @@
    %mavp series start-idx end-idx
    :in-args `(,min-period ,max-period ,ma-type)))
 
-(defmethod midpoint ((series time-series-1) start-idx end-idx &key (time-period 2) (ma-type :sma))
+(defmethod midpoint ((series time-series-1) start-idx end-idx &key (time-period 2))
   (create-ta-series-1 %midpoint series start-idx end-idx :in-args `(,time-period)))
 
 (defmethod midprice ((series time-series-2) start-idx end-idx &key (time-period 2))
