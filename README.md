@@ -1,3 +1,5 @@
+[English](./README.md) | [日本語](./ja)
+
 # TA-LIB API for Common Lisp
 
 **cl-talib-api** is a Common Lisp wrapper for well-known technical analysis library - [TA-LIB](https://ta-lib.org/).
