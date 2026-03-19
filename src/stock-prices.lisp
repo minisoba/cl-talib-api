@@ -1,6 +1,9 @@
 (in-package :cl-talib-api)
 
 (defun make-foreign-object (series)
+  (unless (and (listp series) (every #'realp series))
+    (error 'talib-type-error
+           :text "series must be a list of real numbers"))
   (cffi:foreign-alloc :double :initial-contents series))
 
 (defun free-foreign-object (series)

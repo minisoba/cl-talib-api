@@ -3,7 +3,8 @@
     :license "MIT"
     :description "Unit tests for cl-talib-api"
     :serial t
-    :depends-on (:alexandria
+    :depends-on (:cl-talib-api
+                 :alexandria
                  :cl-ppcre
                  :fiveam
                  :local-time

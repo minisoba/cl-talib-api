@@ -7,7 +7,6 @@
                  :cffi
                  :cl-ppcre
                  :closer-mop
-                 :fiveam
                  :local-time
                  :parse-float
                  :read-csv

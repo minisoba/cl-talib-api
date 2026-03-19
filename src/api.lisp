@@ -7,10 +7,8 @@
 
 (defmethod bbands ((series time-series-1) start-idx end-idx
                    &key (time-period 5) (nb-dev-up 2.0) (nb-dev-down 2.0) (ma-type :sma))
-  (unless (eq (type-of nb-dev-up) 'double-float)
-    (setf nb-dev-up (coerce nb-dev-up 'double-float)))
-  (unless (eq (type-of nb-dev-down) 'double-float)
-    (setf nb-dev-down (coerce nb-dev-down 'double-float)))
+  (setf nb-dev-up (ensure-double-float nb-dev-up 'nb-dev-up))
+  (setf nb-dev-down (ensure-double-float nb-dev-down 'nb-dev-down))
   (create-ta-series-3
    %bbands series start-idx end-idx
    :in-args `(,time-period ,nb-dev-up ,nb-dev-down ,ma-type)))
@@ -28,13 +26,10 @@
                &key (time-period 10) (ma-type :sma))
   (create-ta-series-1 %ma series start-idx end-idx :in-args `(,time-period ,ma-type)))
 
-#-unix
 (defmethod mama ((series time-series-1) start-idx end-idx
                  &key (fast-limit 0.01) (slow-limit 0.01))
-  (unless (eq (type-of fast-limit) 'double-float)
-    (setf fast-limit (coerce fast-limit 'double-float)))
-  (unless (eq (type-of slow-limit) 'double-float)
-    (setf slow-limit (coerce slow-limit 'double-float)))
+  (setf fast-limit (ensure-double-float fast-limit 'fast-limit))
+  (setf slow-limit (ensure-double-float slow-limit 'slow-limit))
   (create-ta-series-2
    %mama series start-idx end-idx
    :in-args `(,fast-limit ,slow-limit)))
@@ -52,32 +47,22 @@
   (create-ta-series-1 %midprice series start-idx end-idx :in-args `(,time-period)))
 
 (defmethod sar ((series time-series-2) start-idx end-idx &key (acceleration 0.02) (maximum 0.2))
-  (unless (eq (type-of acceleration) 'double-float)
-    (setf acceleration (coerce acceleration 'double-float)))
-  (unless (eq (type-of maximum) 'double-float)
-    (setf maximum (coerce maximum 'double-float)))
+  (setf acceleration (ensure-double-float acceleration 'acceleration))
+  (setf maximum (ensure-double-float maximum 'maximum))
   (create-ta-series-1 %sar series start-idx end-idx :in-args `(,acceleration ,maximum)))
 
 (defmethod sar-ext ((series time-series-2) start-idx end-idx
                     &key (start-value 0.0) (offset-on-reverse 0.0)
                          (acceleration-init-long 0.02) (acceleration-long 0.02) (acceleration-max-long 0.2)
                          (acceleration-init-short 0.02) (acceleration-short 0.02) (acceleration-max-short 0.2))
-  (unless (eq (type-of start-value) 'double-float)
-    (setf start-value (coerce start-value 'double-float)))
-  (unless (eq (type-of offset-on-reverse) 'double-float)
-    (setf offset-on-reverse (coerce offset-on-reverse 'double-float)))
-  (unless (eq (type-of acceleration-init-long) 'double-float)
-    (setf acceleration-init-long (coerce acceleration-init-long 'double-float)))
-  (unless (eq (type-of acceleration-long) 'double-float)
-    (setf acceleration-long (coerce acceleration-long 'double-float)))
-  (unless (eq (type-of acceleration-max-long) 'double-float)
-    (setf acceleration-max-long (coerce acceleration-max-long 'double-float)))
-  (unless (eq (type-of acceleration-init-short) 'double-float)
-    (setf acceleration-init-short (coerce acceleration-init-short 'double-float)))
-  (unless (eq (type-of acceleration-short) 'double-float)
-    (setf acceleration-short (coerce acceleration-short 'double-float)))
-  (unless (eq (type-of acceleration-max-short) 'double-float)
-    (setf acceleration-max-short (coerce acceleration-max-short 'double-float)))
+  (setf start-value (ensure-double-float start-value 'start-value))
+  (setf offset-on-reverse (ensure-double-float offset-on-reverse 'offset-on-reverse))
+  (setf acceleration-init-long (ensure-double-float acceleration-init-long 'acceleration-init-long))
+  (setf acceleration-long (ensure-double-float acceleration-long 'acceleration-long))
+  (setf acceleration-max-long (ensure-double-float acceleration-max-long 'acceleration-max-long))
+  (setf acceleration-init-short (ensure-double-float acceleration-init-short 'acceleration-init-short))
+  (setf acceleration-short (ensure-double-float acceleration-short 'acceleration-short))
+  (setf acceleration-max-short (ensure-double-float acceleration-max-short 'acceleration-max-short))
   (create-ta-series-1
    %sar-ext series start-idx end-idx
    :in-args `(,start-value ,offset-on-reverse
@@ -88,8 +73,7 @@
   (create-ta-series-1 %sma series start-idx end-idx :in-args `(,time-period)))
 
 (defmethod t3 ((series time-series-1) start-idx end-idx &key (time-period 10) (v-factor 0.7))
-  (unless (eq (type-of v-factor) 'double-float)
-    (setf v-factor (coerce v-factor 'double-float)))
+  (setf v-factor (ensure-double-float v-factor 'v-factor))
   (create-ta-series-1 %t3 series start-idx end-idx :in-args `(,time-period ,v-factor)))
 
 (defmethod tema ((series time-series-1) start-idx end-idx &key (time-period 10))

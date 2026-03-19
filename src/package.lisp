@@ -13,6 +13,7 @@
    #:time-series-4
    #:make-time-series-4
    #:talib-error
+   #:talib-type-error
 
    #:stock-prices
    #:open-prices-of
@@ -87,6 +88,11 @@
    #:natr
    #:trange
    ))
+
+(pushnew (merge-pathnames "lib/"
+                          (asdf:system-source-directory :cl-talib-api))
+         cffi:*foreign-library-directories*
+         :test #'equal)
 
 (cffi:define-foreign-library libta-lib
   (:darwin  "libta-lib.dylib")

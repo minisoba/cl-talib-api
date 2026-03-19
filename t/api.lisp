@@ -27,7 +27,7 @@
 (defun %nearest-equal-or-less (series expected pos &optional (precision 5))
   (let ((our (nth pos series))
         (expect (nth pos expected)))
-    (< (- our expect) (expt 10 (* -1 precision)))))
+    (< (abs (- our expect)) (expt 10 (* -1 precision)))))
 
 (defmacro %compare-with-expected-from-csv (fn csv ts &optional additional-params)
   (with-unique-names (params series expected)
@@ -71,12 +71,11 @@
   (let ((ts (make-time-series-1 (close-prices-of *stock-prices*))))
     (%compare-with-expected-from-csv 'ma "ma.csv" ts)))
 
-#-unix
 (test mama
   (let ((ts (make-time-series-1 (close-prices-of *stock-prices*))))
     (%compare-with-expected-from-csv
      'mama "mama.csv" ts
-     '(:fast-limit 0.05 :slow-limit 0.2))))
+     '(:fast-limit 0.05d0 :slow-limit 0.2d0))))
 
 (test mavp
   (let ((ts (make-time-series-2
@@ -338,9 +337,6 @@
              (close-prices-of *stock-prices*))))
     (%compare-with-expected-from-csv 'trange "trange.csv" ts)))
 
-(test correl
-  )
-
 (defun %make-stock-prices-from-csv (csv)
   (flet ((%stof (x)
            (parse-float:parse-float x :type 'double-float)))
@@ -373,4 +369,8 @@
 (defun run-test ()
   (setf *read-default-float-format* 'double-float)
   (setf *stock-prices* (load-test-data))
-  (run! 'cl-talib-api-test))
+  (unwind-protect
+       (run! 'cl-talib-api-test)
+    (when *stock-prices*
+      (destroy *stock-prices*)
+      (setf *stock-prices* nil))))
