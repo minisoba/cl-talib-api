@@ -62,10 +62,17 @@ duplicate records."
       (duckdb:with-open-connection (conn db)
         (duckdb:query (%make-create-table-sql table-name first-obj) nil :connection conn)
         (when existing-p
-          (duckdb:query
-           (format nil "INSERT INTO ~a SELECT * FROM read_parquet(~a)"
-                   table-name (%sql-escape parquet-path))
-           nil :connection conn))
+          (let* ((column-names (mapcar (lambda (slot-def)
+                                          (substitute #\_ #\- (string-downcase (symbol-name (car slot-def)))))
+                                        expected-slot-defs))
+                 (column-list (format nil "~{~a~^, ~}" column-names)))
+            (duckdb:query
+             (format nil "INSERT INTO ~a (~a) SELECT ~a FROM read_parquet(~a)"
+                     table-name
+                     column-list
+                     column-list
+                     (%sql-escape parquet-path))
+             nil :connection conn)))
         (let ((committed-p nil))
           (unwind-protect
                (progn
