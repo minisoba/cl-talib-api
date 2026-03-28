@@ -6,13 +6,15 @@
     :depends-on (:cl-talib-api
                  :alexandria
                  :cl-ppcre
+                 :duckdb
                  :fiveam
                  :local-time
                  :parse-float
                  :read-csv
                  :yason)
     :components ((:file "t/package")
-                 (:file "t/api"))
+                 (:file "t/api")
+                 (:file "t/parquet"))
     :perform (asdf:test-op
               (o s)
               (uiop:symbol-call
