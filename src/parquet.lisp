@@ -13,6 +13,14 @@
                              "TIMESTAMP")
                             (t                  "VARCHAR")))))
 
+(defun %quote-identifier (name)
+  "Quote NAME as a DuckDB identifier using double-quote rules (embedded double-quotes are doubled)."
+  (format nil "\"~a\"" (cl-ppcre:regex-replace-all "\"" name "\"\"")))
+
+(defun %column-name (slot-name)
+  "Convert SLOT-NAME symbol to a SQL column name string."
+  (substitute #\_ #\- (string-downcase (symbol-name slot-name))))
+
 (defun %slot-values (obj)
   "Return an alist of (SLOT-NAME . VALUE) for the direct slots of OBJ."
   (loop for slot in (closer-mop:class-direct-slots (class-of obj))
@@ -22,10 +30,10 @@
 (defun %make-create-table-sql (table-name obj)
   "Generate a CREATE TABLE SQL statement from OBJ's slot definitions."
   (format nil "CREATE TABLE ~a (~{~a~^, ~})"
-          table-name
+          (%quote-identifier table-name)
           (loop for (name . sql-type) in (%slot-definitions obj)
                 collect (format nil "~a ~a"
-                                (substitute #\_ #\- (string-downcase (symbol-name name)))
+                                (%quote-identifier (%column-name name))
                                 sql-type))))
 
 (defun %sql-escape (value)
@@ -41,8 +49,10 @@
   "Generate an INSERT INTO SQL statement from OBJ's slot values."
   (let ((cols (%slot-definitions obj))
         (vals (%slot-values obj)))
-    (format nil "INSERT INTO ~a VALUES (~{~a~^, ~})"
-            table-name
+    (format nil "INSERT INTO ~a (~{~a~^, ~}) VALUES (~{~a~^, ~})"
+            (%quote-identifier table-name)
+            (loop for (name . _) in cols
+                  collect (%quote-identifier (%column-name name)))
             (loop for (name . _) in cols
                   for val = (cdr (assoc name vals))
                   collect (%sql-escape val)))))
@@ -63,14 +73,14 @@ duplicate records."
         (duckdb:query (%make-create-table-sql table-name first-obj) nil :connection conn)
         (when existing-p
           (let* ((column-names (mapcar (lambda (slot-def)
-                                          (substitute #\_ #\- (string-downcase (symbol-name (car slot-def)))))
+                                          (%column-name (car slot-def)))
                                         expected-slot-defs))
-                 (column-list (format nil "~{~a~^, ~}" column-names)))
+                 (quoted-column-list (format nil "~{~a~^, ~}" (mapcar #'%quote-identifier column-names))))
             (duckdb:query
              (format nil "INSERT INTO ~a (~a) SELECT ~a FROM read_parquet(~a)"
-                     table-name
-                     column-list
-                     column-list
+                     (%quote-identifier table-name)
+                     quoted-column-list
+                     quoted-column-list
                      (%sql-escape parquet-path))
              nil :connection conn)))
         (let ((committed-p nil))
@@ -93,6 +103,6 @@ duplicate records."
                 (duckdb:query "ROLLBACK" nil :connection conn)))))
         (duckdb:query
          (format nil "COPY (SELECT DISTINCT * FROM ~a) TO ~a (FORMAT PARQUET)"
-                 table-name
+                 (%quote-identifier table-name)
                  (%sql-escape parquet-path))
          nil :connection conn)))))
