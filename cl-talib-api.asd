@@ -7,6 +7,7 @@
                  :cffi
                  :cl-ppcre
                  :closer-mop
+                 :duckdb
                  :local-time
                  :parse-float
                  :read-csv
@@ -16,6 +17,7 @@
                  (:file "src/cffi")
                  (:file "src/series")
                  (:file "src/stock-prices")
-                 (:file "src/api"))
+                 (:file "src/api")
+                 (:file "src/parquet"))
     :in-order-to ((asdf:test-op
                    (asdf:test-op :cl-talib-api-test))))

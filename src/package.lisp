@@ -87,6 +87,9 @@
    #:atr
    #:natr
    #:trange
+
+   ;; parquet
+   #:save-to-parquet
    ))
 
 (pushnew (merge-pathnames "lib/"
