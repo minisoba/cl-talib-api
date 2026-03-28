@@ -144,7 +144,7 @@
                (let ((result (duckdb:query
                               (format nil "SELECT count(*) FROM read_parquet('~a')" path)
                               nil :connection conn)))
-                 (is (= 1 (caar result)))))))
+                 (is (= 1 (aref (cdar result) 0)))))))
       (when (probe-file path) (delete-file path)))))
 
 (test save-to-parquet-rejects-heterogeneous-objects
