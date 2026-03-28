@@ -66,17 +66,24 @@ duplicate records."
            (format nil "INSERT INTO ~a SELECT * FROM read_parquet(~a)"
                    table-name (%sql-escape parquet-path))
            nil :connection conn))
-        (duckdb:query "BEGIN" nil :connection conn)
-        (dolist (obj objects)
-          (unless (and (eq (type-of obj) expected-type)
-                       (equal expected-slot-defs (%slot-definitions obj)))
-            (error "SAVE-TO-PARQUET expects all objects to have the same type and slot layout. Expected type ~S with slots ~S, but got type ~S with slots ~S."
-                   expected-type
-                   (mapcar #'car expected-slot-defs)
-                   (type-of obj)
-                   (mapcar #'car (%slot-definitions obj))))
-          (duckdb:query (%make-insert-sql table-name obj) nil :connection conn))
-        (duckdb:query "COMMIT" nil :connection conn)
+        (let ((committed-p nil))
+          (unwind-protect
+               (progn
+                 (duckdb:query "BEGIN" nil :connection conn)
+                 (dolist (obj objects)
+                   (unless (and (eq (type-of obj) expected-type)
+                                (equal expected-slot-defs (%slot-definitions obj)))
+                     (error "SAVE-TO-PARQUET expects all objects to have the same type and slot layout. Expected type ~S with slots ~S, but got type ~S with slots ~S."
+                            expected-type
+                            (mapcar #'car expected-slot-defs)
+                            (type-of obj)
+                            (mapcar #'car (%slot-definitions obj))))
+                   (duckdb:query (%make-insert-sql table-name obj) nil :connection conn))
+                 (duckdb:query "COMMIT" nil :connection conn)
+                 (setf committed-p t))
+            (unless committed-p
+              (ignore-errors
+                (duckdb:query "ROLLBACK" nil :connection conn)))))
         (duckdb:query
          (format nil "COPY (SELECT DISTINCT * FROM ~a) TO ~a (FORMAT PARQUET)"
                  table-name
