@@ -88,6 +88,67 @@
    #:natr
    #:trange
 
+   ;; lookback — overlap
+   #:accbands-lookback
+   #:bbands-lookback
+   #:dema-lookback
+   #:ema-lookback
+   #:kama-lookback
+   #:ma-lookback
+   #:mama-lookback
+   #:mavp-lookback
+   #:midpoint-lookback
+   #:midprice-lookback
+   #:sar-lookback
+   #:sar-ext-lookback
+   #:sma-lookback
+   #:t3-lookback
+   #:tema-lookback
+   #:trima-lookback
+   #:wma-lookback
+
+   ;; lookback — momentum
+   #:adx-lookback
+   #:adxr-lookback
+   #:apo-lookback
+   #:aroon-lookback
+   #:aroon-osc-lookback
+   #:bop-lookback
+   #:cci-lookback
+   #:cmo-lookback
+   #:dx-lookback
+   #:macd-lookback
+   #:macd-ext-lookback
+   #:macd-fix-lookback
+   #:mfi-lookback
+   #:minus-di-lookback
+   #:minus-dm-lookback
+   #:mom-lookback
+   #:plus-di-lookback
+   #:plus-dm-lookback
+   #:ppo-lookback
+   #:roc-lookback
+   #:rocp-lookback
+   #:rocr-lookback
+   #:rocr100-lookback
+   #:rsi-lookback
+   #:stoch-lookback
+   #:stochf-lookback
+   #:stoch-rsi-lookback
+   #:trix-lookback
+   #:ult-osc-lookback
+   #:willr-lookback
+
+   ;; lookback — volume
+   #:ad-lookback
+   #:ad-osc-lookback
+   #:obv-lookback
+
+   ;; lookback — volatility
+   #:atr-lookback
+   #:natr-lookback
+   #:trange-lookback
+
    ;; parquet
    #:save-to-parquet
    ))
