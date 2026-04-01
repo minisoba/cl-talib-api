@@ -615,3 +615,205 @@
   (out-beg-idx        (:pointer :int))
   (out-nb-element     (:pointer :int))
   (out-real           (:pointer :double)))
+
+;; lookback — overlap
+
+(cffi:defcfun ("TA_ACCBANDS_Lookback" %accbands-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_BBANDS_Lookback" %bbands-lookback) :int
+  (opt-in-time-period :int)
+  (opt-in-nb-dev-up   :double)
+  (opt-in-nb-dev-down :double)
+  (opt-in-ma-type     :ma-type))
+
+(cffi:defcfun ("TA_DEMA_Lookback" %dema-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_EMA_Lookback" %ema-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_KAMA_Lookback" %kama-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_MA_Lookback" %ma-lookback) :int
+  (opt-in-time-period :int)
+  (opt-in-ma-type     :ma-type))
+
+(cffi:defcfun ("TA_MAMA_Lookback" %mama-lookback) :int
+  (opt-in-fast-limit :double)
+  (opt-in-slow-limit :double))
+
+(cffi:defcfun ("TA_MAVP_Lookback" %mavp-lookback) :int
+  (opt-in-min-period :int)
+  (opt-in-max-period :int)
+  (opt-in-ma-type    :ma-type))
+
+(cffi:defcfun ("TA_MIDPOINT_Lookback" %midpoint-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_MIDPRICE_Lookback" %midprice-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_SAR_Lookback" %sar-lookback) :int
+  (opt-in-acceleration :double)
+  (opt-in-maximum      :double))
+
+(cffi:defcfun ("TA_SAREXT_Lookback" %sar-ext-lookback) :int
+  (opt-in-start-value             :double)
+  (opt-in-offset-on-reverse       :double)
+  (opt-in-acceleration-init-long  :double)
+  (opt-in-acceleration-long       :double)
+  (opt-in-acceleration-max-long   :double)
+  (opt-in-acceleration-init-short :double)
+  (opt-in-acceleration-short      :double)
+  (opt-in-acceleration-max-short  :double))
+
+(cffi:defcfun ("TA_SMA_Lookback" %sma-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_T3_Lookback" %t3-lookback) :int
+  (opt-in-time-period :int)
+  (opt-in-v-factor    :double))
+
+(cffi:defcfun ("TA_TEMA_Lookback" %tema-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_TRIMA_Lookback" %trima-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_WMA_Lookback" %wma-lookback) :int
+  (opt-in-time-period :int))
+
+;; lookback — momentum
+
+(cffi:defcfun ("TA_ADX_Lookback" %adx-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_ADXR_Lookback" %adxr-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_APO_Lookback" %apo-lookback) :int
+  (opt-in-fast-period :int)
+  (opt-in-slow-period :int)
+  (opt-in-ma-type     :ma-type))
+
+(cffi:defcfun ("TA_AROON_Lookback" %aroon-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_AROONOSC_Lookback" %aroon-osc-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_BOP_Lookback" %bop-lookback) :int)
+
+(cffi:defcfun ("TA_CCI_Lookback" %cci-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_CMO_Lookback" %cmo-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_DX_Lookback" %dx-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_MACD_Lookback" %macd-lookback) :int
+  (opt-in-fast-period   :int)
+  (opt-in-slow-period   :int)
+  (opt-in-signal-period :int))
+
+(cffi:defcfun ("TA_MACDEXT_Lookback" %macd-ext-lookback) :int
+  (opt-in-fast-period    :int)
+  (opt-in-fast-ma-type   :ma-type)
+  (opt-in-slow-period    :int)
+  (opt-in-slow-ma-type   :ma-type)
+  (opt-in-signal-period  :int)
+  (opt-in-signal-ma-type :ma-type))
+
+(cffi:defcfun ("TA_MACDFIX_Lookback" %macd-fix-lookback) :int
+  (opt-in-signal-period :int))
+
+(cffi:defcfun ("TA_MFI_Lookback" %mfi-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_MINUS_DI_Lookback" %minus-di-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_MINUS_DM_Lookback" %minus-dm-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_MOM_Lookback" %mom-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_PLUS_DI_Lookback" %plus-di-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_PLUS_DM_Lookback" %plus-dm-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_PPO_Lookback" %ppo-lookback) :int
+  (opt-in-fast-period :int)
+  (opt-in-slow-period :int)
+  (opt-in-ma-type     :ma-type))
+
+(cffi:defcfun ("TA_ROC_Lookback" %roc-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_ROCP_Lookback" %rocp-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_ROCR_Lookback" %rocr-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_ROCR100_Lookback" %rocr100-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_RSI_Lookback" %rsi-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_STOCH_Lookback" %stoch-lookback) :int
+  (opt-in-fast-k-period  :int)
+  (opt-in-slow-k-period  :int)
+  (opt-in-slow-k-ma-type :ma-type)
+  (opt-in-slow-d-period  :int)
+  (opt-in-slow-d-ma-type :ma-type))
+
+(cffi:defcfun ("TA_STOCHF_Lookback" %stochf-lookback) :int
+  (opt-in-fast-k-period  :int)
+  (opt-in-fast-d-period  :int)
+  (opt-in-fast-d-ma-type :ma-type))
+
+(cffi:defcfun ("TA_STOCHRSI_Lookback" %stoch-rsi-lookback) :int
+  (opt-in-time-period    :int)
+  (opt-in-fast-k-period  :int)
+  (opt-in-fast-d-period  :int)
+  (opt-in-fast-d-ma-type :ma-type))
+
+(cffi:defcfun ("TA_TRIX_Lookback" %trix-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_ULTOSC_Lookback" %ult-osc-lookback) :int
+  (opt-in-time-period1 :int)
+  (opt-in-time-period2 :int)
+  (opt-in-time-period3 :int))
+
+(cffi:defcfun ("TA_WILLR_Lookback" %willr-lookback) :int
+  (opt-in-time-period :int))
+
+;; lookback — volume
+
+(cffi:defcfun ("TA_AD_Lookback" %ad-lookback) :int)
+
+(cffi:defcfun ("TA_ADOSC_Lookback" %ad-osc-lookback) :int
+  (opt-in-fast-period :int)
+  (opt-in-slow-period :int))
+
+(cffi:defcfun ("TA_OBV_Lookback" %obv-lookback) :int)
+
+;; lookback — volatility
+
+(cffi:defcfun ("TA_ATR_Lookback" %atr-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_NATR_Lookback" %natr-lookback) :int
+  (opt-in-time-period :int))
+
+(cffi:defcfun ("TA_TRANGE_Lookback" %trange-lookback) :int)

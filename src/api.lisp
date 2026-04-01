@@ -218,3 +218,195 @@
 
 (defmethod trange ((series time-series-3) start-idx end-idx)
   (create-ta-series-1 %trange series start-idx end-idx))
+
+;;; ----------------------------------------------------------------
+;;; Lookback queries
+;;; Returns the minimum number of input elements required before
+;;; the first output element can be produced.
+;;; ----------------------------------------------------------------
+
+;; overlap
+
+(defun accbands-lookback (&key (time-period 10))
+  (%accbands-lookback time-period))
+
+(defun bbands-lookback (&key (time-period 5) (nb-dev-up 2.0d0) (nb-dev-down 2.0d0) (ma-type :sma))
+  (%bbands-lookback time-period (coerce nb-dev-up 'double-float)
+                    (coerce nb-dev-down 'double-float) ma-type))
+
+(defun dema-lookback (&key (time-period 10))
+  (%dema-lookback time-period))
+
+(defun ema-lookback (&key (time-period 10))
+  (%ema-lookback time-period))
+
+(defun kama-lookback (&key (time-period 10))
+  (%kama-lookback time-period))
+
+(defun ma-lookback (&key (time-period 10) (ma-type :sma))
+  (%ma-lookback time-period ma-type))
+
+(defun mama-lookback (&key (fast-limit 0.01d0) (slow-limit 0.01d0))
+  (%mama-lookback (coerce fast-limit 'double-float)
+                  (coerce slow-limit 'double-float)))
+
+(defun mavp-lookback (&key (min-period 2) (max-period 10) (ma-type :sma))
+  (%mavp-lookback min-period max-period ma-type))
+
+(defun midpoint-lookback (&key (time-period 2))
+  (%midpoint-lookback time-period))
+
+(defun midprice-lookback (&key (time-period 2))
+  (%midprice-lookback time-period))
+
+(defun sar-lookback (&key (acceleration 0.02d0) (maximum 0.2d0))
+  (%sar-lookback (coerce acceleration 'double-float)
+                 (coerce maximum 'double-float)))
+
+(defun sar-ext-lookback (&key (start-value 0.0d0) (offset-on-reverse 0.0d0)
+                              (acceleration-init-long 0.02d0) (acceleration-long 0.02d0)
+                              (acceleration-max-long 0.2d0)
+                              (acceleration-init-short 0.02d0) (acceleration-short 0.02d0)
+                              (acceleration-max-short 0.2d0))
+  (%sar-ext-lookback (coerce start-value 'double-float)
+                     (coerce offset-on-reverse 'double-float)
+                     (coerce acceleration-init-long 'double-float)
+                     (coerce acceleration-long 'double-float)
+                     (coerce acceleration-max-long 'double-float)
+                     (coerce acceleration-init-short 'double-float)
+                     (coerce acceleration-short 'double-float)
+                     (coerce acceleration-max-short 'double-float)))
+
+(defun sma-lookback (&key (time-period 10))
+  (%sma-lookback time-period))
+
+(defun t3-lookback (&key (time-period 10) (v-factor 0.7d0))
+  (%t3-lookback time-period (coerce v-factor 'double-float)))
+
+(defun tema-lookback (&key (time-period 10))
+  (%tema-lookback time-period))
+
+(defun trima-lookback (&key (time-period 10))
+  (%trima-lookback time-period))
+
+(defun wma-lookback (&key (time-period 10))
+  (%wma-lookback time-period))
+
+;; momentum
+
+(defun adx-lookback (&key (time-period 14))
+  (%adx-lookback time-period))
+
+(defun adxr-lookback (&key (time-period 14))
+  (%adxr-lookback time-period))
+
+(defun apo-lookback (&key (fast-period 12) (slow-period 26) (ma-type :sma))
+  (%apo-lookback fast-period slow-period ma-type))
+
+(defun aroon-lookback (&key (time-period 14))
+  (%aroon-lookback time-period))
+
+(defun aroon-osc-lookback (&key (time-period 14))
+  (%aroon-osc-lookback time-period))
+
+(defun bop-lookback ()
+  (%bop-lookback))
+
+(defun cci-lookback (&key (time-period 14))
+  (%cci-lookback time-period))
+
+(defun cmo-lookback (&key (time-period 14))
+  (%cmo-lookback time-period))
+
+(defun dx-lookback (&key (time-period 14))
+  (%dx-lookback time-period))
+
+(defun macd-lookback (&key (fast-period 12) (slow-period 26) (signal-period 9))
+  (%macd-lookback fast-period slow-period signal-period))
+
+(defun macd-ext-lookback (&key (fast-period 12) (fast-ma-type :sma)
+                               (slow-period 26) (slow-ma-type :sma)
+                               (signal-period 9) (signal-ma-type :sma))
+  (%macd-ext-lookback fast-period fast-ma-type slow-period slow-ma-type
+                      signal-period signal-ma-type))
+
+(defun macd-fix-lookback (&key (signal-period 9))
+  (%macd-fix-lookback signal-period))
+
+(defun mfi-lookback (&key (time-period 14))
+  (%mfi-lookback time-period))
+
+(defun minus-di-lookback (&key (time-period 14))
+  (%minus-di-lookback time-period))
+
+(defun minus-dm-lookback (&key (time-period 14))
+  (%minus-dm-lookback time-period))
+
+(defun mom-lookback (&key (time-period 10))
+  (%mom-lookback time-period))
+
+(defun plus-di-lookback (&key (time-period 14))
+  (%plus-di-lookback time-period))
+
+(defun plus-dm-lookback (&key (time-period 14))
+  (%plus-dm-lookback time-period))
+
+(defun ppo-lookback (&key (fast-period 12) (slow-period 26) (ma-type :sma))
+  (%ppo-lookback fast-period slow-period ma-type))
+
+(defun roc-lookback (&key (time-period 10))
+  (%roc-lookback time-period))
+
+(defun rocp-lookback (&key (time-period 10))
+  (%rocp-lookback time-period))
+
+(defun rocr-lookback (&key (time-period 10))
+  (%rocr-lookback time-period))
+
+(defun rocr100-lookback (&key (time-period 10))
+  (%rocr100-lookback time-period))
+
+(defun rsi-lookback (&key (time-period 14))
+  (%rsi-lookback time-period))
+
+(defun stoch-lookback (&key (fast-k-period 5) (slow-k-period 3) (slow-k-ma-type :sma)
+                            (slow-d-period 3) (slow-d-ma-type :sma))
+  (%stoch-lookback fast-k-period slow-k-period slow-k-ma-type
+                   slow-d-period slow-d-ma-type))
+
+(defun stochf-lookback (&key (fast-k-period 5) (fast-d-period 3) (fast-d-ma-type :sma))
+  (%stochf-lookback fast-k-period fast-d-period fast-d-ma-type))
+
+(defun stoch-rsi-lookback (&key (time-period 14) (fast-k-period 5) (fast-d-period 3) (fast-d-ma-type :sma))
+  (%stoch-rsi-lookback time-period fast-k-period fast-d-period fast-d-ma-type))
+
+(defun trix-lookback (&key (time-period 14))
+  (%trix-lookback time-period))
+
+(defun ult-osc-lookback (&key (time-period-1 7) (time-period-2 14) (time-period-3 28))
+  (%ult-osc-lookback time-period-1 time-period-2 time-period-3))
+
+(defun willr-lookback (&key (time-period 14))
+  (%willr-lookback time-period))
+
+;; volume
+
+(defun ad-lookback ()
+  (%ad-lookback))
+
+(defun ad-osc-lookback (&key (fast-period 3) (slow-period 10))
+  (%ad-osc-lookback fast-period slow-period))
+
+(defun obv-lookback ()
+  (%obv-lookback))
+
+;; volatility
+
+(defun atr-lookback (&key (time-period 14))
+  (%atr-lookback time-period))
+
+(defun natr-lookback (&key (time-period 14))
+  (%natr-lookback time-period))
+
+(defun trange-lookback ()
+  (%trange-lookback))
